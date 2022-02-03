@@ -1,0 +1,145 @@
+* {
+	font-family: Tahoma
+}
+
+.bold{
+	font-weight: bolder;
+}
+
+.error{
+	color : white;
+	padding : 20px;
+	background-color: #dd7d68;
+	border-radius: 5px;
+}
+
+.row {
+	display: flex;
+	flex-direction: row;
+}
+
+nav {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+nav img {
+	height: 50px;
+}
+
+nav button {
+	background-color: #c00000;
+	border-radius : 5px;
+	margin-right: 10px;
+	height: 40px;
+	width: 150px;
+
+}
+nav button a {
+	color : white;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+body > div {
+	width: 80%;
+	min-height: 70vh;
+	border-radius: 5px;
+	margin : auto;
+	padding: 20px;
+	box-sizing: border-box;
+}
+
+body > div  h2 {
+	color:white;
+}
+.space-between {
+	justify-content: space-between;
+}
+
+.yellow {
+	background-color: #ffd966;	
+}
+
+.btn-green {
+	background-color: #6aa84f;
+	height: 30px;
+}
+
+
+.btn-green a, .btn-red a {
+	color : white;
+	text-decoration: none;
+}
+
+.red {
+	background-color: #cf2a27;
+}
+
+.red table {
+	text-align: center;
+}
+
+.orange {
+	background-color: #e69138;	
+}
+
+.yellow h2 {
+	color : white;
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+table, th, td {
+	border : 1px solid black;
+
+}
+
+tr:nth-child(odd){
+	background-color: #cccccc;
+}
+
+tr:nth-child(even){
+	background-color: white;
+}
+
+td{
+	padding: 10px;
+}
+
+td a {
+	text-decoration: none;
+	color: black;
+}
+
+
+.btn-red{
+	background-color: #c00000;
+	color :white;
+	height: 30px;
+}
+
+.right {
+	text-align: right;
+}
+
+form {
+	width: 40%;
+	margin : 0 auto;
+}
+
+form label {
+	display: inline-block;
+	width: 200px;
+	margin-bottom: 20px;
+	color : white;
+	font-weight: bolder;
+}
+
+.center {
+	text-align: center;
+}
