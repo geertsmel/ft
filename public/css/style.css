@@ -1,6 +1,12 @@
 * {
 	font-family: Tahoma
 }
+.alert {
+	padding : 10px;
+	border : 1px solid #d3d31e;
+	background-color: #d3d31e;
+	border-radius: 10px;
+}
 
 .bold{
 	font-weight: bolder;
@@ -53,6 +59,7 @@ body > div {
 
 body > div  h2 {
 	color:white;
+	font-size: 40px;
 }
 .space-between {
 	justify-content: space-between;

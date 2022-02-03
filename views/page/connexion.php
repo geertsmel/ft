@@ -11,4 +11,8 @@
         </div>
         <p class="right"><input type="submit" value="Connexion" class="btn-red"></p>
     </form>
+    <code>
+        <p>Comptes</p>
+        <span>techno, butcher,frites, hamburger</span>
+    </code>
 </div>

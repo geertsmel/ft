@@ -1,0 +1,10 @@
+<nav>
+    <a href="?section=accueil"><img src="public/images/logo.png" alt="Logo"></a>
+    <p><a href="?section=accueil">Planning</a></p>
+    <p><a href="?section=foodtrucks">Foodtrucks</a></p>
+    <p>
+        <?= $_SESSION["user"]->login; ?> 
+        <button><a href="?section=deconnexion">Déconnexion</a></button>
+    </p>
+    
+</nav>

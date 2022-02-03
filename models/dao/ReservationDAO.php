@@ -13,13 +13,18 @@
             return $this->belongsTo(new FoodtruckDAO(), $idFoodTruck);
         }
 
+        public function statut($idStatut){
+            return $this->belongsTo(new StatutDAO(), $idStatut);
+        }
+
 
         // CREATE
         public function create ($result) {
+            
             return new Reservation(
                 !empty($result['id']) ? $result['id'] : 0,
                 $result['date'],
-                $result['statut'],
+                $result['fk_statut'],
                 $result['fk_foodtruck']       
             );
         }
@@ -31,13 +36,26 @@
             return new Reservation(
                 $result['id'],
                 $result['date'],
-                $result['fk_statut'],
+                $this->statut($result['fk_statut']),
+                $this->foodtruck($result['fk_foodtruck'])  
+            );
+        }
+
+        public function deepCreate2 ($result) {
+            if(!$result){
+                return false;
+            }
+            // var_dump($result);
+            return new Reservation(
+                $result['id'],
+                $result['date'],
+                $this->statut($result['fk_statut']),
                 $this->foodtruck($result['fk_foodtruck'])  
             );
         }
         // INSERT
         public function store ($data) {
-            if (empty($data['date']) || empty($data['statut']) || empty($data['fk_foodtruck'])) {
+            if (empty($data['date']) || empty($data['fk_statut']) || empty($data['fk_foodtruck'])) {
                 return false;
             }
             
@@ -46,7 +64,7 @@
                 [
                     'id' => htmlspecialchars($data['id']),
                     'date' => htmlspecialchars($data['date']),
-                    'fk_statut' => htmlspecialchars($data['statut']),
+                    'fk_statut' => htmlspecialchars($data['fk_statut']),
                     'fk_foodtruck' => htmlspecialchars($data['fk_foodtruck'])
                 ]
             );
@@ -62,27 +80,29 @@
                     return true;
                 } catch (PDOException $e) {
                     $this->message_error($e);
+                
                     return false;
                 }
             }
         }
         // UPDATE
-        public function update ($id, $data) {
-    
-            if (empty($data['date']) || empty($data['statut']) || empty($data['fk_foodtruck'])) {
+        public function update ($data, $statut) {
+
+            if (empty($data['id']) || empty($data['date']) || empty($data['fk_foodtruck'])) {
                 return false;
             }
     
             $reservation = $this->create(
                 [
-                    'id'=> htmlspecialchars($id),
+                    'id'=> htmlspecialchars($data['id']),
                     'date' => htmlspecialchars($data['date']),
-                    'statut' => htmlspecialchars($data['statut']),
+                    'fk_statut' => $statut,
                     'fk_foodtruck' => htmlspecialchars($data['fk_foodtruck']),
                 ]
             );
-    
+
             if($reservation) {
+                
                 try {
                     $statement = $this->connection->prepare("UPDATE {$this->table} SET date = ?, fk_statut = ?, fk_foodtruck = ? WHERE id = ?");
                     $statement->execute([
@@ -91,8 +111,10 @@
                         $reservation->foodtruck,
                         $reservation->id
                     ]);
+                    
                     return true;
                 } catch (PDOException $e) {
+                    
                     $this->message_error($e);
                     return false;
                 }
@@ -100,6 +122,7 @@
         }
         // DELETE
         function delete ($data) {
+        
             if(empty($data['id'])) {
                 return false;
             }
@@ -109,8 +132,11 @@
                 $statement->execute([
                     $data['id']
                 ]);
+                return true;
             } catch(PDOException $e) {
+           
                $this->message_error($e);
+               return false;
             }
         }
     }

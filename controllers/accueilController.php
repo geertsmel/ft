@@ -2,11 +2,11 @@
     include_once("models/dao/ReservationDAO.php");
     include_once("models/dao/FoodtruckDAO.php");
     include_once("models/dao/StatutDAO.php");
-    include_once("models/dao/UtilisateurDAO.php");
+    
     
     $reservationDAO = new ReservationDAO();
     $reservations = $reservationDAO->fetchWhere("fk_statut", 2);
-    //var_dump($reservations);
+    // var_dump($reservations);
 
     // $foodtruckDAO = new FoodtruckDAO();
     // $foodtrucks = $foodtruckDAO->fetchAll();

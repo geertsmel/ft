@@ -11,7 +11,6 @@
             return new Utilisateur(
                 !empty($result['id']) ? $result['id'] : 0,
                 $result['login'],
-                !empty($result['mdp']) ? $result['mdp'] : null,
                 $result['role']
             );
         }

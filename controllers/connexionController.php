@@ -8,10 +8,11 @@
         if(trim($login) != "" && trim($mdp) !=""){
             $userDAO = new UtilisateurDAO();
             $exist = $userDAO->verify($login, $mdp);
-            // var_dump($exist);
+            var_dump($exist);
             if(!empty($exist)){
                 $_SESSION["user"] = $exist;
                 // rediriger vers la page d'acccuil en fonction du role
+                header("Location:?section=accueil");
                 
             }
         }

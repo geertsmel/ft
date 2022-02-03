@@ -4,19 +4,17 @@
         private $login;
         private $mdp;
         private $role;
-        public function __construct($id, $login, $mdp, $role){
+
+        public function __construct($id, $login, $role, $mdp = null){
             $this->id = $id;
             $this->login = $login;
             $this->mdp = $mdp;
-            $this->role = $role;
+            $this->role = intval($role);
 
         }
 
         public function __get($prop){
             if(property_exists($this, $prop)){
-                if($prop == "mdp"){
-                    return null;
-                }
                 return $this->$prop;
             }
         }
