@@ -1,5 +1,5 @@
 <div class="orange">
-    <h3>Je refuse</h3>
+    <h2>Je refuse</h2>
     <form action="#" method="post">
         <div>
             <input type="hidden" name="id" value="<?= $reservation->id ?>">

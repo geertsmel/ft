@@ -29,6 +29,7 @@
         }
         // INSERT
         public function store ($data) {
+            
             if (empty($data['nom']) || empty($data['siteweb']) || empty($data['fk_utilisateur'])) {
                 return false;
             }
@@ -48,11 +49,13 @@
                     $statement->execute([
                         $foodtruck->nom,
                         $foodtruck->siteweb,
-                        $foodtruck->fk_utilisateur
+                        $foodtruck->utilisateur
                     ]);
                     return true;
                 } catch (PDOException $e) {
                     $this->message_error($e);
+                    var_dump($e);
+                    die;
                     return false;
                 }
             }
@@ -94,14 +97,16 @@
             if(empty($data['id'])) {
                 return false;
             }
-            
+           
             try {
                 $statement = $this->connection->prepare("DELETE FROM {$this->table} WHERE id = ?");
                 $statement->execute([
                     $data['id']
                 ]);
+                return true;
             } catch(PDOException $e) {
                $this->message_error($e);
+               return false;
             }
         }
     }

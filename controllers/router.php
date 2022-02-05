@@ -22,23 +22,46 @@
     ];
 
 
-    if(isset($_GET["section"])){
-        $role = 0;
+    $role = 0;
 
-        if(isset($_SESSION["user"])){
-            $role = $_SESSION["user"]->role;        
-        }
-        //var_dump($role);
-        if(array_key_exists($_GET["section"], $tabDroits[$role])){
-            include_once("controllers/" . $tabDroits[$role][$_GET["section"]] . ".php");
-        }
-        else {
-            include_once("controllers/erreurController.php");
-        }
+    if(isset($_SESSION["user"])){
+        $role = $_SESSION["user"]->role;        
     }
-    else{
-        include_once("controllers/accueilController.php");
+
+    if(!isset($_GET["section"])){
+        $_GET["section"]= "accueil";
     }
+
+    //var_dump($role);
+    if(array_key_exists($_GET["section"], $tabDroits[$role])){
+        include_once("controllers/" . $tabDroits[$role][$_GET["section"]] . ".php");
+    }
+    else {
+        include_once("controllers/erreurController.php");
+    }
+
+    // if(isset($_GET["section"])){
+    //     //var_dump($role);
+    //     if(array_key_exists($_GET["section"], $tabDroits[$role])){
+    //         include_once("controllers/" . $tabDroits[$role][$_GET["section"]] . ".php");
+    //     }
+    //     else {
+    //         include_once("controllers/erreurController.php");
+    //     }
+    // }
+    // else{
+    //     if(isset($_SESSION["user"])){
+    //         $role = $_SESSION["user"]->role;        
+    //     }
+    //     if(isset($_SESSION["user"])){
+            
+    //         include_once("controllers/" . $tabDroits[$role]["accueil"] . ".php");
+    //     }
+    //     }
+    //     else {
+    //         include_once("controllers/accueilController.php");
+    //     }
+    // }
     
 
 ?>

@@ -1,7 +1,7 @@
 <div class="red">
 <div class="row space-between">
         <h2>Foodtrucks</h2>
-        <button class="btn-green"><a href="?section=ajouter">Ajouter un foodtruck</a></button>
+        <button class="btn-green"><a href="?section=foodtrucks&action=ajouter">Ajouter un foodtruck</a></button>
     </div>
     <?php if(count($foodtrucks) > 0) : ?>
         <table>
@@ -16,10 +16,10 @@
                 <td><?= $f->nom; ?></td>
                 <td><a href="<?= $f->siteweb; ?>" target="_blank"><?= $f->siteweb; ?></a></td>
                 <td>
-                    <a href="?section=modifier&id=<?= $f->id?>">&#128394;</a>
+                    <a href="?section=foodtrucks&action=modifier&id=<?= $f->id?>">&#128394;</a>
                 </td>
                 <td>
-                    <a href="?section=supprimer&id=<?= $f->id?>">&#128465;</a>
+                    <a href="?section=foodtrucks&action=supprimer&id=<?= $f->id?>">&#128465;</a>
                 </td>
             </tr>
             <?php endforeach; ?>
