@@ -32,7 +32,7 @@
                 return false;
             }
             
-            $statut = $this->create(
+            $utilisateur = $this->create(
                 // htmlspecialchars() : retourne la donnée échapée
                 [
                     'id' => htmlspecialchars($data['id']),
@@ -42,13 +42,13 @@
                 ]
             );
             
-            if($statut) {
+            if($utilisateur) {
                 try {
                     $statement = $this->connection->prepare("INSERT INTO {$this->table} (login, mdp, role) VALUES (?)");
                     $statement->execute([
-                        $statut->login,
-                        $statut->mdp,
-                        $statut->role
+                        $utilisateur->login,
+                        $utilisateur->mdp,
+                        $utilisateur->role
                         
                     ]);
                     return true;
