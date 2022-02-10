@@ -22,8 +22,8 @@
             return new Utilisateur(
                 $result['id'],
                 $result['login'],
-                $result['mdp'],
-                $result['role']
+                $result['role'],
+                $result['mdp']                
             );
         }
         // INSERT
@@ -107,6 +107,7 @@
 
         // VERIFIER la connexion
         public function verify($login, $mdp){
+            // TODO : mettre en place hash du mdp
             try {
                 $statement = $this->connection->prepare("SELECT id, login, role FROM {$this->table} WHERE login = ? AND mdp = ?");
                 $statement->execute(

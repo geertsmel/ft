@@ -12,7 +12,7 @@
                 !empty($result['id']) ? $result['id'] : 0,
                 $result['nom'],
                 $result['siteweb'],
-                $result['fk_utilisateur']       
+                $result['fk_utilisateur']      
             );
         }
         public function deepCreate ($result) {
@@ -24,7 +24,7 @@
                 $result['id'],
                 $result['nom'],
                 $result['siteweb'],
-                $result['fk_utilisateur']  
+                $result['fk_utilisateur']  // à modifier pour qu'il récupère l'objet utilisateur  
             );
         }
         // INSERT

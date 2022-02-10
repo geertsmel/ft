@@ -40,28 +40,6 @@
         include_once("controllers/erreurController.php");
     }
 
-    // if(isset($_GET["section"])){
-    //     //var_dump($role);
-    //     if(array_key_exists($_GET["section"], $tabDroits[$role])){
-    //         include_once("controllers/" . $tabDroits[$role][$_GET["section"]] . ".php");
-    //     }
-    //     else {
-    //         include_once("controllers/erreurController.php");
-    //     }
-    // }
-    // else{
-    //     if(isset($_SESSION["user"])){
-    //         $role = $_SESSION["user"]->role;        
-    //     }
-    //     if(isset($_SESSION["user"])){
-            
-    //         include_once("controllers/" . $tabDroits[$role]["accueil"] . ".php");
-    //     }
-    //     }
-    //     else {
-    //         include_once("controllers/accueilController.php");
-    //     }
-    // }
     
 
 ?>
