@@ -24,10 +24,16 @@
         }
         // créer avec des relations
         //Créer tous avec relations
-        public function createAllDeep ($results) {
+        public function createAllDeep ($results, $secure = false) {
             $list = array();
             foreach ($results as $result) {
-                array_push($list, $this->deepCreate($result));
+                if($secure){
+                    array_push($list, $this->createSecure($result));
+                }
+                else{
+                    array_push($list, $this->deepCreate($result));
+                }
+                
             }
             return $list;
         }
@@ -36,7 +42,7 @@
 
         //chercher tous
         // READ
-        public function fetchAll () {
+        public function fetchAll ($secure = false) {
             // essaie
             try {
                 // prépare la requete : permet d'éviter les injections SQL
@@ -46,7 +52,8 @@
                 // permet de récupérer les données au format clé => valeur
                 $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                 // permet de récupérer les infos en profondeur
-                return $this->createAllDeep($result);
+
+                return $this->createAllDeep($result, $secure);
             } 
             // récupère l'erreur qui de type PDO
             catch (PDOException $e) {
@@ -56,14 +63,14 @@
         }
         //chercher 1
         // READ
-        public function fetch ($id, $deep = true) {
+        public function fetch($id, $deep = true) {
             try {
                 $statement = $this->connection->prepare("SELECT * FROM {$this->table} WHERE id = ?");
                 $statement->execute([$id]);
                 $result = $statement->fetch(PDO::FETCH_ASSOC);
                 
                 if($deep) {
-                return $this->deepCreate($result); 
+                    return $this->deepCreate($result); 
                 }
                 return $this->create($result);
                 
@@ -72,12 +79,13 @@
             }
         }
         // READ where
-        public function fetchWhere ($ref, $value) {
+        public function fetchWhere ($ref, $value, $secure = false) {
             try {
                 $statement = $this->connection->prepare("SELECT * FROM {$this->table} WHERE {$ref} = ?");
                 $statement->execute([$value]);
                 $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                return $this->createAllDeep($result);
+                
+                return $this->createAllDeep($result, $secure);
             } catch (PDOException $e) {
                 print $e->getMessage();
             }

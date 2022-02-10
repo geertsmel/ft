@@ -13,8 +13,20 @@
             <input type="text" name="nom" id="nom" value="<?= $foodtruck->nom; ?>">
         </div>
         <div>
-        <label for="siteweb">Site web :</label>
+            <label for="siteweb">Site web :</label>
             <input type="url" name="siteweb" id="siteweb" value="<?= $foodtruck->siteweb; ?>">
+        </div>
+        <div>
+            <label for="utilisateur">Utilisateur :</label>
+            <select name="utilisateur" id="utilisateur">
+                <?php foreach($utilisateurs as $u): ?>
+                    <option value="<?= $u->id ?>"
+                    <?php if($u->id == $foodtruck->utilisateur): ?>
+                        selected
+                    <?php endif; ?>
+                    ><?= $u->login ?></option>
+                <?php endforeach; ?>
+            </select>
         </div>
         <div>
             <button class="btn-red"><a href="?section=foodtrucks&action=voir">Annuler</a></button>

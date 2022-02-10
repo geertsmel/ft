@@ -11,6 +11,14 @@
             return new Utilisateur(
                 !empty($result['id']) ? $result['id'] : 0,
                 $result['login'],
+                $result['role'],
+                $result['mdp']
+            );
+        }
+        public function createSecure ($result) {
+            return new Utilisateur(
+                !empty($result['id']) ? $result['id'] : 0,
+                $result['login'],
                 $result['role']
             );
         }
@@ -35,16 +43,15 @@
             $utilisateur = $this->create(
                 // htmlspecialchars() : retourne la donnée échapée
                 [
-                    'id' => htmlspecialchars($data['id']),
                     'login' => htmlspecialchars($data['login']),
-                    'mdp' => htmlspecialchars($data['mdp']),
+                    'mdp' => password_hash($data['mdp'], PASSWORD_BCRYPT),
                     'role' => htmlspecialchars($data['role'])
                 ]
             );
             
             if($utilisateur) {
                 try {
-                    $statement = $this->connection->prepare("INSERT INTO {$this->table} (login, mdp, role) VALUES (?)");
+                    $statement = $this->connection->prepare("INSERT INTO {$this->table} (login, mdp, role) VALUES (?, ?, ?)");
                     $statement->execute([
                         $utilisateur->login,
                         $utilisateur->mdp,
@@ -61,18 +68,19 @@
         // UPDATE
         public function update ($id, $data) {
     
-            if (empty($data['nom'])) {
+            if (empty($data['login']) || empty($data['mdp']) || empty($data['role'])) {
                 return false;
             }
     
             $utilisateur = $this->create(
                 [
                     'id'=> htmlspecialchars($id),
-                    'nom' => htmlspecialchars($data['nom'])
-                    
+                    'login' => htmlspecialchars($data['login']),
+                    'role' => htmlspecialchars($data['role']),
+                    'mdp' => htmlspecialchars($data['mdp'])
                 ]
             );
-    
+            
             if($utilisateur) {
                 try {
                     $statement = $this->connection->prepare("UPDATE {$this->table} SET login = ?, mdp = ?, role = ? WHERE id = ?");
@@ -100,8 +108,10 @@
                 $statement->execute([
                     $data['id']
                 ]);
+                return true;
             } catch(PDOException $e) {
                $this->message_error($e);
+               return false;
             }
         }
 
@@ -109,19 +119,23 @@
         public function verify($login, $mdp){
             // TODO : mettre en place hash du mdp
             try {
-                $statement = $this->connection->prepare("SELECT id, login, role FROM {$this->table} WHERE login = ? AND mdp = ?");
+                $statement = $this->connection->prepare("SELECT id, login, mdp, role FROM {$this->table} WHERE login = ?");
                 $statement->execute(
                     [
-                        $login,
-                        $mdp
+                        $login
                     ]
                 );
                 $result = $statement->fetch(PDO::FETCH_ASSOC);
                 if(!$result){
                     return false;
                 }
+
+                if(password_verify($mdp, $result["mdp"])){
+                    return $this->create($result);
+                }
+                return false;
                 
-                return $this->create($result);
+                
                 
             } catch (PDOException $e) {
                 var_dump($e);

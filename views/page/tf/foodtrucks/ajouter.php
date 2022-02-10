@@ -12,8 +12,16 @@
             <input type="text" name="nom" id="nom">
         </div>
         <div>
-        <label for="siteweb">Site web :</label>
+            <label for="siteweb">Site web :</label>
             <input type="url" name="siteweb" id="siteweb">           
+        </div>
+        <div>
+            <label for="utilisateur">Utilisateur :</label>
+            <select name="utilisateur" id="utilisateur">
+                <?php foreach($utilisateurs as $u): ?>
+                    <option value="<?= $u->id ?>"><?= $u->login ?></option>
+                <?php endforeach; ?>
+            </select>
         </div>
         <div>
             <button class="btn-red"><a href="?section=foodtrucks&action=voir">Annuler</a></button>

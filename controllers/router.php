@@ -10,6 +10,7 @@
             "accueil" => "tf/accueilTFController",
             "planning" => "tf/planningController",
             "foodtrucks" => "tf/foodtrucksController",
+            "utilisateurs" => "tf/utilisateursController",
             "deconnexion" => "deconnexionController"
         ],
         // foodtruck

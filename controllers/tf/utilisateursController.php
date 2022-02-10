@@ -1,15 +1,11 @@
 <?php 
-    include_once("models/dao/FoodtruckDAO.php");
-    $foodtrucksDAO = new FoodtruckDAO();
-    
-    $foodtrucks = $foodtrucksDAO->fetchAll();
-    // var_dump($foodtrucks);
-
+    include_once("models/dao/UtilisateurDAO.php");
     $utilisateursDAO = new UtilisateurDAO();
     
-    $utilisateurs = $utilisateursDAO->fetchWhere("role", 2);
-    //  var_dump($utilisateurs);
-    
+    //$utilisateurs = $utilisateursDAO->fetchWhere("role",2);
+    $utilisateurs = $utilisateursDAO->fetchAll(true);
+    // var_dump($utilisateurs);
+
     $tabAction = [
         "voir",
         "ajouter",
@@ -23,38 +19,37 @@
     if(isset($_GET["action"]) && in_array($_GET["action"], $tabAction)){
         
         if(isset($_GET["id"])){
-            $foodtrucks = $foodtrucksDAO->fetchWhere("id", $_GET["id"]);
-            if(count($foodtrucks)==1){
-                $foodtruck = $foodtrucks[0];
+            $utilisateurs = $utilisateursDAO->fetchWhere("id", $_GET["id"], true);
+            if(count($utilisateurs)==1){
+                $utilisateur = $utilisateurs[0];
             }
             else {
                 include_once("views/page/erreur.php");
                 die;
             }
-            // var_dump($rfoodtruck);
+            // var_dump($utilisateur);
+
             
         }
         
-        if(!empty($_POST["nom"]) && !empty($_POST["siteweb"]) && !empty($_POST["utilisateur"])){
+        if(!empty($_POST["login"]) && !empty($_POST["mdp"]) && !empty($_POST["role"])){
         
             $data = [
                 "id" => (isset($_POST["id"])) ? $_POST["id"] : 0,
-                "nom" => $_POST["nom"],
-                "siteweb" => $_POST["siteweb"],
-                "fk_utilisateur" => $_POST["utilisateur"]
+                "login" => $_POST["login"],
+                "mdp" => $_POST["mdp"],
+                "role" => $_POST["role"]
             ];
-            // var_dump($data);
-            // die;
             switch($_POST["submit"]){
                 case "ajouter":
-                    if($foodtrucksDAO->store($data)){
-                        header("Location:?section=foodtrucks&action=voir");
+                    if($utilisateursDAO->store($data)){
+                        header("Location:?section=utilisateurs&action=voir");
                     }
                     break;
                 case "modifier":
                     if(isset($_GET["id"]) && $_GET["id"] == $data["id"]){
-                        if($foodtrucksDAO->update($_GET["id"], $data)){
-                            header("Location:?section=foodtrucks&action=voir");
+                        if($utilisateursDAO->update($_GET["id"], $data)){
+                            header("Location:?section=utilisateurs&action=voir");
                         }
                     }
                     else {
@@ -64,9 +59,10 @@
                     
                     break;
                 case "supprimer":
+                    
                     if(isset($_GET["id"]) && $_GET["id"] == $data["id"]){
-                        if($foodtrucksDAO->delete($data)){
-                            header("Location:?section=foodtrucks&action=voir");
+                        if($utilisateursDAO->delete($data)){
+                            header("Location:?section=utilisateurs&action=voir");
                         }
                     }
                     else {
@@ -77,7 +73,7 @@
                     break; 
             }
         }
-        include_once("views/page/tf/foodtrucks/".$_GET["action"].".php");
+        include_once("views/page/tf/utilisateurs/".$_GET["action"].".php");
     }
     else {
         include_once("views/page/erreur.php");
